@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 8px;
+            margin: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            margin: 20px auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Budget Tracker</h1>
+    <label for="description">Description:</label>
+    <input type="text" id="description"><br><br>
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount"><br><br>
+    <button onclick="addExpense()">Add Expense</button><br><br>
+    <table id="expenseTable">
+        <tr>
+            <th>Description</th>
+            <th>Amount</th>
+        </tr>
+    </table>
+    <p id="totalExpense"></p>
+
+    <script>
+        let expenses = [];
+
+        function addExpense() {
+            let description = document.getElementById('description').value;
+            let amount = parseFloat(document.getElementById('amount').value);
+            if (description && amount) {
+                expenses.push({ description, amount });
+                updateTable();
+                updateTotalExpense();
+            }
+        }
+
+        function updateTable() {
+            let table = document.getElementById('expenseTable');
+            table.innerHTML = '<tr><th>Description</th><th>Amount</th></tr>';
+            expenses.forEach(expense => {
+                table.innerHTML += `<tr><td>${expense.description}</td><td>${expense.amount}</td></tr>`;
+            });
+        }
+
+        function updateTotalExpense() {
+            let total = 0;
+            expenses.forEach(expense => {
+                total += expense.amount;
+            });
+            document.getElementById('totalExpense').innerText = 'Total Expenses: ' + total;
+        }
+    </script>
+</body>
+</html>
